@@ -55,12 +55,24 @@ public class ArithmeticCalculatorServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         
-        int f=Integer.parseInt(request.getParameter("first"));
-        int s=Integer.parseInt(request.getParameter("second"));
+        int f;
+        int s;
         int r=0;
        String msg="";
-       String button_param = request.getParameter("submit");
+        String strFirst = request.getParameter("first");
+        String strSecond = request.getParameter("second");
+      
+            
+       
+       try{
+         
+         f=Integer.parseInt(strFirst);
+         s=Integer.parseInt(strSecond);
+            
+        request.setAttribute("f", strFirst);
+        request.setAttribute("s", strSecond);
+           
+     //  String button_param = request.getParameter("submit");
        //RequestDispatcher rd = null;
        
        String add=request.getParameter("add");
@@ -81,19 +93,23 @@ public class ArithmeticCalculatorServlet extends HttpServlet {
        }else if( mod != null){
            r=f%s;
              msg=r+"";
-       } else if(button_param.equals("")){
-          
-           msg="---";
+       }else if(strFirst.equals("") || strSecond.equals("")){
+            msg="Inalid";
+            
+      
        }else {
          
            msg="Invalid";
+           
        }
-    
-      
+  
         System.out.println(msg);
             request.setAttribute("msg", msg);
             request.setAttribute("f", f);
             request.setAttribute("s", s);
+        }catch (Exception e)
+        {e.printStackTrace(); }
+      
             
              getServletContext().getRequestDispatcher("/WEB-INF/arithmeticcalculator.jsp").forward(request, response);
      //  getServletContext().getRequestDispatcher("/WEB-INF/arithmeticcalculator.jsp").forward(request, response);
