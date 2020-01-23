@@ -55,7 +55,7 @@ public class ArithmeticCalculatorServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-          getServletContext().getRequestDispatcher("/WEB-INF/arithmeticcalculator.jsp").forward(request, response);
+         
         int f=Integer.parseInt(request.getParameter("first"));
         int s=Integer.parseInt(request.getParameter("second"));
         int r=0;
@@ -63,22 +63,22 @@ public class ArithmeticCalculatorServlet extends HttpServlet {
        String button_param = request.getParameter("submit");
        //RequestDispatcher rd = null;
        
-       String add=request.getParameter("+");
-       String sub=request.getParameter("-");
-       String mul=request.getParameter("*");
-       String mod=request.getParameter("%");
+       String add=request.getParameter("add");
+       String sub=request.getParameter("sub");
+       String mul=request.getParameter("mul");
+       String mod=request.getParameter("mod");
        
-       if(button_param.equals(add)){
+       if(add !=null){
            r=f+s;
              msg=r+"";
           
-       }else if(button_param.equals(sub)){
+       }else if(sub !=null){
            r=f-s;
              msg=r+"";
-       }else if(button_param.equals(mul)){
+       }else if(mul!=null){
            r=f*s;
              msg=r+"";
-       }else if(button_param.equals(mod)){
+       }else if( mod != null){
            r=f%s;
              msg=r+"";
        } else if(button_param.equals("")){
@@ -92,6 +92,10 @@ public class ArithmeticCalculatorServlet extends HttpServlet {
       
         System.out.println(msg);
             request.setAttribute("msg", msg);
+            request.setAttribute("f", f);
+            request.setAttribute("s", s);
+            
+             getServletContext().getRequestDispatcher("/WEB-INF/arithmeticcalculator.jsp").forward(request, response);
      //  getServletContext().getRequestDispatcher("/WEB-INF/arithmeticcalculator.jsp").forward(request, response);
 //        processRequest(request, response);
     }
